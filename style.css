@@ -25,6 +25,11 @@ body {
     border: 2px solid rgb(20,46,34);
     background-color: rgb(174,176,171,255);
     border-radius: 2vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-size: 5vh;
+    padding-right: 1vh;
 }
 
 .inputs {
@@ -59,4 +64,8 @@ button {
 #not-needed {
     border: 0px;
     background-color: rgb(59,91,78);
+}
+
+#reset-btn {
+    background-color: rgb(196,63,17);
 }
