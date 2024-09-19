@@ -15,8 +15,8 @@ body {
     align-items: center;
     border: 2px solid black;
     border-radius: 5vh;
-    /* background-color: rgb(169,180,172); */
-    background-color: rgb(59,91,78);
+    background-color: #046865;
+    /* background-color: rgb(59,91,78); */
 }
 
 .display {
@@ -55,7 +55,8 @@ button {
     border-radius: 5vh;
     width: 9vh;
     height: 9vh;
-    background-color: rgb(84, 118, 103);
+    /* background-color: rgb(84, 118, 103); */
+    background-color: #0b7a75;
     font-size: 5vh;
     /* font-weight: bold; */
     color: rgb(229, 248, 234);
@@ -63,9 +64,11 @@ button {
 
 #not-needed {
     border: 0px;
-    background-color: rgb(59,91,78);
+    /* background-color: rgb(59,91,78); */
+    background-color: #046865;
 }
 
 #reset-btn {
-    background-color: rgb(196,63,17);
+    /* background-color: rgb(196,63,17); */
+    background-color: #e53d00;
 }

@@ -15,7 +15,18 @@ function divide(a, b) {
 };
 
 function roundResult(result) {
-    return +result.toPrecision(12);  // Round to 15 significant digits
+    let resultString = result.toString();
+    
+    // If the result exceeds 15 characters (overflow), round it to 10 significant digits
+    if (resultString.length >= 15) {
+        result = +result.toPrecision(10);  // Round to 10 significant digits
+        resultString = result.toString();  // Recalculate result string after rounding
+        if (resultString.length >= 15) {
+            resultString = result.toExponential(10);  // Use scientific notation with 5 decimal places
+        }
+        result = Number(resultString)
+    }
+    return resultString;  // Return the string result for display
 }
 
 function operate(num1, operator, num2) {
@@ -53,9 +64,11 @@ let numOne = null;
 let numTwo = null;
 let operator = null;
 let operatorPressed = false;
-let currentAnswer = "0";
+let currentAnswer = 0;
 let lastPressedWasOperator = false;
 const displayNumber = document.querySelector(".display")
+const decimalButton = document.querySelector(".decimal");
+let disableDecimal = false;
 
 /*
     Need to make sure each number pressed on the calculator corresponds
@@ -64,19 +77,22 @@ const displayNumber = document.querySelector(".display")
 const numberButtons = document.querySelectorAll(".numberBtn");
 numberButtons.forEach(button => {
     button.addEventListener("click", function() {
-        lastPressedWasOperator = false;
         let number = this.getAttribute("data-value");
-        if (displayNumber.textContent === currentAnswer.toString() || displayNumber.textContent === "0") {
+        answerString = currentAnswer.toExponential(10);
+        if (displayNumber.textContent === currentAnswer.toString() || errorMessages.includes(displayNumber.textContent)) {
             displayNumber.textContent = "";
         }
-        else if (displayNumber.textContent === numOne.toString() && operatorPressed) {
-            // FIX BUG WITH 8 * 80
+        else if (displayNumber.textContent === "0") {
             displayNumber.textContent = "";
         }
+        else if ((operatorPressed && lastPressedWasOperator) || displayNumber.textContent === answerString) {
+            displayNumber.textContent = "";
+        }
+        lastPressedWasOperator = false;
         displayNumber.textContent += number;
         operatorPressed ? 
-            numTwo = parseInt(displayNumber.textContent) : 
-            numOne = parseInt(displayNumber.textContent);
+            numTwo = Number(displayNumber.textContent) : 
+            numOne = Number(displayNumber.textContent);
     });
 });
 
@@ -87,11 +103,14 @@ operationButtons.forEach(button => {
         if (operatorPressed && !lastPressedWasOperator) {
             currentAnswer = operate(numOne, operator, numTwo);
             displayNumber.textContent = currentAnswer;
+            currentAnswer = Number(currentAnswer);
             numOne = currentAnswer;
+            disableDecimal = false;
         }
         operator = this.getAttribute("data-op");
         operatorPressed = true;
         lastPressedWasOperator = true;
+        disableDecimal = false;
     });
 });
 
@@ -99,10 +118,12 @@ const evaluateExp = document.querySelector(".equalsBtn");
 evaluateExp.addEventListener("click", () => {
     if (numOne !== null && numTwo !== null && operator !== null) {
         currentAnswer = operate(numOne, operator, numTwo);
-        console.log(currentAnswer);
+        // console.log(currentAnswer);
         displayNumber.textContent = currentAnswer;
+        currentAnswer = Number(currentAnswer);
         numOne = currentAnswer;
         operatorPressed = false;
+        disableDecimal = false;
     }
 })
 
@@ -113,6 +134,13 @@ clearAll.addEventListener("click", () => {
     operator = null;
     operatorPressed = false;
     lastPressedWasOperator = false;
-    currentAnswer = "0";
+    currentAnswer = 0;
     displayNumber.textContent = currentAnswer;
+});
+
+decimalButton.addEventListener("click", () => {
+    if (!disableDecimal) {
+        displayNumber.textContent += ".";
+    }
+    disableDecimal = true;
 });
