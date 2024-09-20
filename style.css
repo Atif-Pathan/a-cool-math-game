@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 body {
     display: flex;
     justify-content: center;
@@ -13,23 +15,24 @@ body {
     justify-content: center;
     gap: 2vh;
     align-items: center;
-    border: 2px solid black;
     border-radius: 5vh;
-    background-color: #046865;
-    /* background-color: rgb(59,91,78); */
+    background: linear-gradient(145deg, #046865, #034C50); /* Subtle gradient for depth */
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3), -10px -10px 25px rgba(255, 255, 255, 0.2); /* Stronger 3D shadow */
 }
 
 .display {
     width: 45vh;
     height: 7vh;
-    border: 2px solid rgb(20,46,34);
-    background-color: rgb(174,176,171,255);
     border-radius: 2vh;
+    font-family: 'Roboto Mono', monospace;
+    background-color: rgb(200, 215, 178);
     display: flex;
     justify-content: end;
     align-items: center;
     font-size: 5vh;
     padding-right: 1vh;
+    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.3), inset 5px 5px 15px rgba(255, 255, 255, 0.2); /* Stronger inset 3D effect */
+    border: 1px solid rgba(20, 46, 34, 0.3); /* Subtle border */
 }
 
 .inputs {
@@ -51,24 +54,71 @@ body {
     /* gap: 4vh; */
 }
 
+/* General Button Styling (applies to all buttons) */
 button {
     border-radius: 5vh;
     width: 9vh;
     height: 9vh;
-    /* background-color: rgb(84, 118, 103); */
-    background-color: #0b7a75;
     font-size: 5vh;
-    /* font-weight: bold; */
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    /* font-family: "Nunito", sans-serif; */
+    /* font-family: "Roboto Mono", sans-serif; */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255, 0.1); /* Depth with shadow */
+    transition: background 0.05s ease, box-shadow 0.05s ease, transform 0.05s ease; /* Faster transition */
+}
+
+#plus-minus {
+    font-size: 4vh;
+}
+
+/* Teal Buttons (Numbers, +/- and Decimal) */
+.numberBtn, #plus-minus, .decimal {
+    background: linear-gradient(145deg, #0d857d, #056c66); /* Gradient background */
     color: rgb(229, 248, 234);
+    border: 2px solid rgba(91, 186, 183, 0.3); /* Light teal border */
 }
 
+/* Press effect for Teal Buttons */
+.numberBtn:active, #plus-minus:active, .decimal:active {
+    background: linear-gradient(145deg, #056c66, #0d857d); /* Invert gradient on press */
+    transform: scale(0.95); /* Slight press down effect */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.1); /* Inner shadow on press */
+}
+
+/* Hidden "not-needed" button */
 #not-needed {
-    border: 0px;
-    /* background-color: rgb(59,91,78); */
-    background-color: #046865;
+    border: none;
+    visibility: hidden;
+    background-color: #046865; /* Same color as calculator background */
 }
 
-#reset-btn {
-    /* background-color: rgb(196,63,17); */
-    background-color: #e53d00;
+/* Orange Buttons ("C" and "backspace") */
+#reset-btn, #backspace {
+    background: linear-gradient(145deg, #fb5607, #e36414); /* Orange gradient background */
+    color: white;
+    font-size: 4.5vh;
+    border: 2px solid rgba(233, 226, 223, 0.3); /* Light orange border with transparency */
+}
+
+/* Press effect for Orange Buttons */
+#reset-btn:active, #backspace:active {
+    background: linear-gradient(145deg, #e36414, #fb5607); /* Invert gradient on press */
+    transform: scale(0.95); /* Slight press down effect */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.1); /* Inner shadow on press */
+}
+
+/* Desaturated Green for Operation and Equals Buttons */
+.operations, .equalsBtn {
+    background: linear-gradient(145deg, #6C9A8B, #56796D); /* Desaturated green background */
+    color: white;
+    font-size: 5vh;
+    border: 2px solid rgba(123, 222, 189, 0.3); /* Light desaturated green border */
+}
+
+/* Press effect for Desaturated Green Buttons */
+.operations:active, .equalsBtn:active {
+    background: linear-gradient(145deg, #56796D, #6C9A8B); /* Invert gradient on press */
+    transform: scale(0.95); /* Slight press down effect */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.1); /* Inner shadow on press */
 }

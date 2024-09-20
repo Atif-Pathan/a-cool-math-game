@@ -56,8 +56,8 @@ function operate(num1, operator, num2) {
 }
 const errorMessages = [
     "0k, genius..",
-    "... uh ok nice try",
-    "You almost had me..."
+    "uh, nice try",
+    "Almost got me!"
 ];
 
 let numOne = null;
