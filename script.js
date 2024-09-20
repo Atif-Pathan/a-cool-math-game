@@ -18,10 +18,10 @@ function roundResult(result) {
     let resultString = result.toString();
     
     // If the result exceeds 15 characters (overflow), round it to 10 significant digits
-    if (resultString.length >= 15) {
+    if (resultString.length >= 13) {
         result = +result.toPrecision(10);  // Round to 10 significant digits
         resultString = result.toString();  // Recalculate result string after rounding
-        if (resultString.length >= 15) {
+        if (resultString.length >= 13) {
             resultString = result.toExponential(10);  // Use scientific notation with 5 decimal places
         }
         result = Number(resultString)
@@ -71,7 +71,7 @@ const decimalButton = document.querySelector(".decimal");
 const backspaceButton = document.querySelector("#backspace");
 const plusMinusButton = document.querySelector("#plus-minus");
 let disableDecimal = false;
-const MAX_DISPLAY_LENGTH = 15;
+const MAX_DISPLAY_LENGTH = 13;
 
 /*
     Need to make sure each number pressed on the calculator corresponds
