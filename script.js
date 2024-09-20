@@ -19,10 +19,10 @@ function roundResult(result) {
     
     // If the result exceeds 15 characters (overflow), round it to 10 significant digits
     if (resultString.length >= 13) {
-        result = +result.toPrecision(10);  // Round to 10 significant digits
+        result = +result.toPrecision(7);  // Round to 10 significant digits
         resultString = result.toString();  // Recalculate result string after rounding
         if (resultString.length >= 13) {
-            resultString = result.toExponential(10);  // Use scientific notation with 5 decimal places
+            resultString = result.toExponential(7);  // Use scientific notation with 5 decimal places
         }
         result = Number(resultString)
     }
