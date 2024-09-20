@@ -64,11 +64,14 @@ let numOne = null;
 let numTwo = null;
 let operator = null;
 let operatorPressed = false;
-let currentAnswer = 0;
+let currentAnswer = -Infinity;
 let lastPressedWasOperator = false;
 const displayNumber = document.querySelector(".display")
 const decimalButton = document.querySelector(".decimal");
+const backspaceButton = document.querySelector("#backspace");
+const plusMinusButton = document.querySelector("#plus-minus");
 let disableDecimal = false;
+const MAX_DISPLAY_LENGTH = 15;
 
 /*
     Need to make sure each number pressed on the calculator corresponds
@@ -79,13 +82,13 @@ numberButtons.forEach(button => {
     button.addEventListener("click", function() {
         let number = this.getAttribute("data-value");
         answerString = currentAnswer.toExponential(10);
+        if (displayNumber.textContent.length >= MAX_DISPLAY_LENGTH &&!lastPressedWasOperator) {
+            return;  // Stop further input if the display is full
+        }
         if (displayNumber.textContent === currentAnswer.toString() || errorMessages.includes(displayNumber.textContent)) {
             displayNumber.textContent = "";
         }
-        else if (displayNumber.textContent === "0") {
-            displayNumber.textContent = "";
-        }
-        else if ((operatorPressed && lastPressedWasOperator) || displayNumber.textContent === answerString) {
+        if ((operatorPressed && lastPressedWasOperator) || displayNumber.textContent === answerString) {
             displayNumber.textContent = "";
         }
         lastPressedWasOperator = false;
@@ -105,12 +108,10 @@ operationButtons.forEach(button => {
             displayNumber.textContent = currentAnswer;
             currentAnswer = Number(currentAnswer);
             numOne = currentAnswer;
-            disableDecimal = false;
         }
         operator = this.getAttribute("data-op");
         operatorPressed = true;
         lastPressedWasOperator = true;
-        disableDecimal = false;
     });
 });
 
@@ -118,7 +119,6 @@ const evaluateExp = document.querySelector(".equalsBtn");
 evaluateExp.addEventListener("click", () => {
     if (numOne !== null && numTwo !== null && operator !== null) {
         currentAnswer = operate(numOne, operator, numTwo);
-        // console.log(currentAnswer);
         displayNumber.textContent = currentAnswer;
         currentAnswer = Number(currentAnswer);
         numOne = currentAnswer;
@@ -134,13 +134,50 @@ clearAll.addEventListener("click", () => {
     operator = null;
     operatorPressed = false;
     lastPressedWasOperator = false;
-    currentAnswer = 0;
-    displayNumber.textContent = currentAnswer;
+    currentAnswer = -Infinity;
+    displayNumber.textContent = "";
+    disableDecimal = false;
 });
 
 decimalButton.addEventListener("click", () => {
-    if (!disableDecimal) {
-        displayNumber.textContent += ".";
+    console.log(currentAnswer.toString());
+    
+    if (displayNumber.textContent.includes(".") || lastPressedWasOperator || displayNumber.textContent === currentAnswer.toString()) {
+        disableDecimal = true;
     }
-    disableDecimal = true;
+    else {
+        disableDecimal = false;
+    }
+
+    if (!disableDecimal) {
+        if (displayNumber.textContent.length === 0) {
+            displayNumber.textContent += "0.";
+        }
+        else {
+            displayNumber.textContent += ".";    
+        }
+    }
 });
+
+backspaceButton.addEventListener("click", function() {
+    console.log("button pressed");
+    console.log(displayNumber.textContent.length);
+    
+    if (displayNumber.textContent.length > 0) {
+        displayNumber.textContent = displayNumber.textContent.slice(0, -1);
+        operatorPressed ? 
+            numTwo = Number(displayNumber.textContent) : 
+            numOne = Number(displayNumber.textContent);
+    }
+});
+
+plusMinusButton.addEventListener("click", function() {
+    if (displayNumber.textContent.length > 0) {
+        let currentValue = Number(displayNumber.textContent);
+        currentValue = currentValue * -1;
+        displayNumber.textContent = currentValue.toString();
+        operatorPressed ? 
+            numTwo = Number(displayNumber.textContent) : 
+            numOne = Number(displayNumber.textContent);
+    }
+})
